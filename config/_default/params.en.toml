@@ -1,0 +1,40 @@
+Description = "Weclome to Bunny's website. Bunny is a college student majored in Internet of Things."
+Keywords =  "Blog, Software, C/C++, Algorithm, Pop music, Marvel"
+Subtitle = "Soon to be online"
+AuthorImg = "/img/headpic.jpg"
+AuthorName = "Bunny"
+Introduce = "What's past is prologue."
+DateFormat = "2006/01/02"
+YearFormat = "2006Y"
+MonthFormat = "01/02"
+
+[[Socials]]
+  Name = "Homepage"
+  Icon = "hand-peace-o"
+  URL = "/en/"
+
+[[Socials]]
+  Name = "GitHub"
+  Icon = "github"
+  URL = "https://github.com/Yinan-Hong/"
+
+[[Socials]]
+  Name = "Wechat"
+  Icon = "weixin"
+  URL = "/img/wxgzh.png"
+
+
+[[Links]]
+  Name = "SZTU"
+  Icon  = "graduation-cap"
+  Permalink = "https://english.sztu.edu.cn/"
+
+[[Links]]
+  Name = "Theme sourse"
+  Icon  = "github"
+  Permalink = "https://github.com/elkan1788/hugo-theme-next"
+
+[[Links]]
+  Name = "Apple"
+  Icon = "github"
+  Permalink = "https://www.apple.com.cn/"

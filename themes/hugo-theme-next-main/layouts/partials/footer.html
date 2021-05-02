@@ -1,0 +1,41 @@
+<div class="copyright" >
+  <span class="copyright-year">
+    &copy; 2021 - {{ now.Year }}
+  </span>
+  <span class="with-love"><i class="fa fa-heart"></i></span>
+  <span class="copyright-author">{{ .Site.Title }}</span>
+</div>
+<div class="powered-info">
+  <span class="powered-by">
+    Powered by - <a class="powered-link" href="//gohugo.io" target="_blank" title="hugo" >Hugo v{{ hugo.Version }}</a>
+  </span>
+  <span class="separator-line">/</span>
+  <span class="theme-info">
+    Theme by - <a class="powered-link" href="//github.com/elkan1788/hugo-theme-next" target="_blank"> NexT
+    </a>
+  </span>
+</div>
+<div class="vistor-info">
+{{ partial "widgets/statis.html" .}}
+</div>
+<div class="license-info">
+  {{ if eq .Page.Lang "zh-cn" }}
+  <span class="storage-info">
+    Storage by
+    <a href="https://www.github.com" style="font-weight:700" target="_blank">Github</a>
+  </span>
+  <span class="separator-line">/</span>
+  <span class="license-num">
+    <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备no_such_thing号</a>
+  </span>
+  {{ else }}
+  <span class="storage-info">
+    Storage by
+    <a href="https://www.github.com" style="font-weight:700" target="_blank">Github</a>
+  </span>
+  <span class="separator-line">/</span>
+  <span class="license-num">
+    <a href="http://beian.miit.gov.cn" target="_blank">ICP.No no_such_thing</a>
+  </span>
+  {{ end }}
+</div>

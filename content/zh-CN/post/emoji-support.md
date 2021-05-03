@@ -10,7 +10,7 @@ tags = [
 
 在Hugo项目中可以通过多种方式启用Emoji。
 <!--more-->
-The [`emojify`](https://gohugo.io/functions/emojify/) function can be called directly in templates or [Inline Shortcodes](https://gohugo.io/templates/shortcode-templates/#inline-shortcodes). 
+The [`emojify`](https://gohugo.io/functions/emojify/) function can be called directly in templates or [Inline Shortcodes](https://gohugo.io/templates/shortcode-templates/#inline-shortcodes).
 
 To enable emoji globally, set `enableEmoji` to `true` in your site's [configuration](https://gohugo.io/getting-started/configuration/) and then you can type emoji shorthand codes directly in content files; e.g.
 
@@ -44,3 +44,6 @@ The [Emoji cheat sheet](http://www.emoji-cheat-sheet.com/) is a useful reference
 }
 </style>
 {{< /css.inline >}}
+
+
+&emsp;

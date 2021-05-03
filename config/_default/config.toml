@@ -52,5 +52,6 @@ ignoreErrors = ["error-remote-getjson"]
   disableXML = false
   minifyOutput = true
 
-[permalinks]
-  root = "/"
+
+  #hello you fucking serious???
+  #cant read this?

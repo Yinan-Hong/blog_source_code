@@ -2,7 +2,7 @@ Description = "欢迎访问兔兔的网站。兔兔现在是物联网工程专�
 Keywords =  "博客, 码农, C/C++, 算法, 流行音乐, 漫威"
 Subtitle = "正在搬运公众号文章，敬请期待"
 AuthorImg = "/img/headpic.jpg"
-AuthorName = "兔兔"
+AuthorName = "兔楠"
 Introduce = "凡是过往，皆为序章"
 DateFormat = "2006-01-02"
 YearFormat = "2006年"
@@ -16,13 +16,13 @@ MonthFormat = "01-02"
 [[Socials]]
   Name = "微信公众号"
   Icon = "weixin"
-  URL = "/img/wxgzh.png/"
+  URL = "/img/wxgzh.png"
+
 
 [[Socials]]
   Name = "GitHub"
   Icon = "github"
   URL = "https://github.com/Yinan-Hong/"
-
 
 
 

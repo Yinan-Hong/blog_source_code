@@ -4,22 +4,22 @@
 
 [Share]
   Enable = true
-  AddthisId = "Your AddthisId"
+  AddthisId = "ra-6091f652e3a51633"
 
 [Comment]
   Enable = true
   Module = "Waline"
   LiveReId = "Your LiveReId"
-  WalineSerURL = "Your WalineSerURL"
+  WalineSerURL = "https://bwc-r7t6uo7zv-yinan-hong.vercel.app"
 
 [LeanCloud]
-  AppId = "Your LCAppId"
-  AppKey = "Your LCAppKey"
-  ServerURL = "Your LCServer"
+  AppId = "7yW5FhLkR7nUz9hQVintOiaI-gzGzoHsz"
+  AppKey = "EAzJRBKGIWSUXwFBsmomInpt"
+  ServerURL = "https://7yw5fhlk.lc-cn-n1-shared.com"
 
 [Statis]
   BusuanziCounter = true
-  CNNZSiteId = "Your CNNZSiteId"
+  CNNZSiteId = "1279899318"
   BaiduSiteId = "Your BaiduSiteId"
   GoogleSiteId = "Your GoogleSiteId"
 

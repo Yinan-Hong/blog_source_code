@@ -10,7 +10,7 @@ MonthFormat = "01/02"
 
 [[Socials]]
   Name = "Homepage"
-  Icon = "hand-peace-o"
+  Icon = "home"
   URL = "/en/"
 
 [[Socials]]

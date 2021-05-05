@@ -1,6 +1,6 @@
 Title =  "Bunny's website."
 BaseUrl = "https://yinan-hong.github.io/"
-publishdir = "../public"
+publishdir = "/public"
 
 DefaultContentLanguage = "zh-cn"
 LanguageCode = "zh-CN"
@@ -52,6 +52,3 @@ ignoreErrors = ["error-remote-getjson"]
   disableXML = false
   minifyOutput = true
 
-
-  #hello you fucking serious???
-  #cant read this?

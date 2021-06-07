@@ -24,7 +24,7 @@
   GoogleSiteId = "Your GoogleSiteId"
 
 [OnlineIM]
-  Enable = true
+  Enable = false
   DaoVoiceId = "Your DaoVoiceId"
 
 [Others]

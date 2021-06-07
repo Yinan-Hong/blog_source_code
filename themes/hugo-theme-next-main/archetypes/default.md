@@ -1,6 +1,6 @@
 +++
-title: "{{ .TranslationBaseName | title }}"
-date: "{{ .Date }}"
+title = "{{ .TranslationBaseName | title }}"
+date = "{{ .Date }}"
 categories = [
     "xx"
 ]

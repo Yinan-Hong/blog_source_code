@@ -1,58 +1,81 @@
 +++
 title = "关于我"
 description = "Hugo, the world's fastest framework for building websites"
-date = "2019-02-28"
+date = "2021-05-21"
 author = "Hugo Authors"
 url = "about.html"
 type = "about"
+
 +++
+<center>
+
+## 年级
+
+大二在读
+
+## 教育经历
+
+深圳中学2019届
+
+深圳技术大学2023届物联网工程专业
+
+## 学习方向
+
+C/C++后台开发
+
+游戏开发
+
+## 爱好
+
+唱歌、弹琴、吉他、美剧、漫威（资深漫威粉）、王者荣耀
+
+![79cbf9fa3c86cb41d059bb99f956349](../pic/79cbf9fa3c86cb41d059bb99f956349.png)
+
+## 梦想
+
+世界和平
+
+## 小目标
+
+去腾讯开发王者荣耀
+
+## 长得
+
+很帅
 
 
-TODO
 
 
-TODO
+
+</center>
+
+## 本站介绍
+
+有一天心血来潮，想做个网站放放自己的**作品**和**学习经历**什么的，**也方便我35岁失业后转行搞自媒体**。于是五一捣鼓了一天弄出了这么个东西，感谢上一位优化这个主题的dalao慷慨开源。
+
+### 网站用到的技术
+
+本站用的是一个叫**Hugo**的静态网页生成工具，据说是用**Go语言**写的，所以理论上比大家常用的一些**Hexo**之类的可能速度要快一点，但比较小众所以功能可能有些不太全，出了问题只能上英文网站查...
+
+网站主题用的是**Next**，很简洁**很苹果**，我很喜欢。Anyway，页面最下方有指向Hugo和next主题的链接，左侧sidebar有**优化这个主题的github**，有兴趣的朋友可以自行了解下。等我捣鼓明白了再写一篇关于制作个人主页的教程。
+
+### 关于我
+
+我是万万没想到会学计算机方向的，我喜欢的是**生物**，但家里没矿学不起。因为高考考了个很尴尬的分，种种考虑下还是到了深技大的物联网专业。
+
+上大学之前我是完完全全没有接触过编程方面的知识的，硬要说有就是高中的电脑课教过c++，但那个课是教三样东西（另外两个是pr和产品设计），取成绩最好的两项算成绩。反正当时考试敲个算闰年的程序，我愣是一行都没敲出来，然后旁边的文科生朋友很快就写完了.... ~~所以说程序语言应该算语言学...~~
+
+Anyway... 我感觉学校对我们专业的定位不是很明确，然后需要花大量时间学硬件相关的课程，我按学校的学习进度应该会比同期的计算机专业的同学要慢上不少，而且乱上不少。我在学习的时候，时常会遇到一些**比入门问题要难一点，但是也没难到哪里去的问题**。周围很少有能一起讨论的同学，所以我总是会在一些很蠢的问题上卡很长时间。
+
+### 关于本站的文章
+
+所以我打算写一些**技术文章**，记录一下学习过程中遇到过的比较难的知识or技术。然后这学期在上数据结构与算法，如果做到什么有意思的题目，或者我有什么清奇的思路，也会写一篇**题解之类的**文章。
+
+我目前的水平也就这样了，我会尽量把我搞懂了的东西写清楚，希望能帮到比我菜的同学。等以后我牛逼了一定会写更多有技术含量的文章来回馈开源社区！
+
+除了编程相关之外，我还会写一些键政文章。我觉得中国的教育缺失对学生**社会责任感**的培养，作为社会中的一个个体，我们应该承担自己的社会责任，要有推动社会进步的意识。我很幸运在深圳中学遇到了很多有思想，有担当的青年同学和教师。在ta们的影响下我开始关注时事，并乐于分享自己的思考。说白了就是，**学什么都救不了中国人，所以我只能拿起手中的键盘...**
 
 
-TODO
 
+![99643390b337bc9a9d1da565c74fa69](../pic/99643390b337bc9a9d1da565c74fa69.jpg)
 
-TODO
-
-
-TODO
-
-
-TODO
-
-
-TODO
-
-
-TODO
-
-
-TODO
-
-
-TODO
-
-
-TODO
-Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
-
-Hugo makes use of a variety of open source projects including:
-
-* https://github.com/yuin/goldmark
-* https://github.com/alecthomas/chroma
-* https://github.com/muesli/smartcrop
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
-
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
-
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
-
-Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
-
-Learn more and contribute on [GitHub](https://github.com/gohugoio).

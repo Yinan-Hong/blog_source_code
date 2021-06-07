@@ -9,18 +9,16 @@ hasCJKLanguage = true
 
 Theme =  "hugo-theme-next-main"
 
+busuanzi = true
+
 MetaDataFormat =  "toml"
 
 PaginatePath =  "p"
-Paginate = 5
+Paginate = 6
 
 DisablePathToLower =  false
 
 PreserveTaxonomyNames = false
-
-PygmentsStyle = "emacs"
-pygmentsCodefences = true
-pygmentsCodefencesGuessSyntax = true
 
 enableRobotsTXT = true
 enableEmoji = true
@@ -52,3 +50,12 @@ ignoreErrors = ["error-remote-getjson"]
   disableXML = false
   minifyOutput = true
 
+
+[markup]
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.highlight]
+      lineNos = true
+      style = "github"

@@ -7,15 +7,15 @@
         <a class="post-title-link" href="{{ .Permalink }}" itemprop="url">
         {{ .Title }}
         </a>
-      </h1>     
+      </h1>
     </header>
     <div class="post-body" itemprop="articleBody">
     {{ .Content }}
     </div>
-    
+
     {{ partial "widgets/reward.html" .}}
-   
-    <footer class="post-footer">     
+
+    <footer class="post-footer">
      {{ partial "widgets/comment.html" .}}
     </footer>
   </article>

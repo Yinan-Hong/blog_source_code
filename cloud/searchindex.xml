@@ -1,4 +1,108 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>AVL树和Trie树</title><url>https://yinanhong.site/post/avltree/</url><categories><category>数据结构</category><category>算法</category></categories><tags><tag>AVL树</tag><tag>平衡二叉树</tag><tag>数据结构</tag><tag>Trie</tag></tags><content type="html"> 本文介绍AVL树和Trie树。Trie树是因为正好做到所以就顺便记录一下。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>用Hexo框架搭建Github Page个人博客</title><url>https://yinanhong.site/post/hexo/</url><categories><category>小玩意</category></categories><tags><tag>Hexo</tag><tag>静态博客</tag></tags><content type="html"> 本文教大家快速从0搭建一个简单的博客，更深入的内容请自行了解。朋友们可以把成果留在评论区，有任何疑问欢迎留言。
+前言 拥有一个个人博客还是一件比较酷的事情，而且非常适合新手入门。不只是做前端，在做个人博客的过程中，会接触到很多技术，我自己就是从搭了这个网页开始，慢慢想搞各种各样乱七八糟的东西的。
+如果过程中有不熟悉的技术，可以先跟着流程把网站搭起来，以后再慢慢研究不懂的地方。
+静态网页（可跳过） 百度：
+静态网页就是纯前端，没有后台，没有数据库，不含程序，不可交互，一般用于更新较少的展示型网页。
+我们做网页显然不可能自己用html写出整个东西来，现在有许多好用的开源框架，比如Hexo，Jekyll，Hugo，Nust.js，Gatsby&hellip;
+还有些听说比较好用，但我没用过的动态网站框架比如wordpress，感兴趣的朋友们可以自行了解下。
+推荐理由（可跳过） Hexo是国内使用人数最多的框架，好处就是主题多，bug少（相对，勿怼），遇到问题基本都能找到中文的解答，特别适合新手。
+对于新手来说，Github Page就很好，作为展示足够了。优点就是快，生成好的网页直接上传到github就可以显示了。缺点就是慢，大家都懂的，有时候网络不好就会打不开。
+有兴趣的朋友也可以买一台云服务器，把网页部署在国内的服务器，访问起来就比较快了。阿里云的学生优惠还是非常划算的。学计算机的人应该人手一台服务器，不过新手可能不太知道服务器能用来干嘛。可以作为个人的数据库啊，学网络的时候可以把server丢到服务器上面跑啊什么的。如果只是为了放网页的话，配置起来也比较麻烦，建议大家学习到一定阶段再考虑买服务器的事。
+前置技术 一丢丢前端知识，html，css，javascript，只需要稍微能阅读网页源代码就行了，真的菜鸟教程看个五分钟你就比我会的多了，因为我只看了两分钟&hellip;
+Markdown语言，一种轻量级标记语言，提供非常简易的排版。现在对排版要求不高的网页文字内容，基本都是用markdown，比如Github，知乎啊啥的，都是支持插入markdown的，还有我的评论区。这个真的很简单，看个十分钟就会用了，而且程序员必会用到这个的。然后推荐个markdown编辑工具叫Typora。
+我的操作环境是win10，然后大家可以用vs code或者其他你熟悉的ide。因为最近看到有同学在用记事本敲代码，让我很绝望。
+安装Hexo 官方文档里面写的很清楚。我下面列举主要步骤。
+安装git（可选） Hexo可以用git在生成静态文件的时候，推送到云端。请自行找个靠谱的教程安装一下git，并不需要熟悉git的使用。 下面这个链接仅供参考。
+Windows系统Git安装教程（详解Git安装过程） - 知乎 (zhihu.com)
+安装Node.js Hexo需要Node.js环境，所以要先安装Node.js。
+Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。 Node.js 的包管理器 npm，是全球最大的开源库生态系统。
+LTS是Long-Term Support，那我们就接受一下他的recommend，下这个版本好了。
+安装的时候一直点next就好了，注意到这一步的时候确认一下add to path有勾选上，如果没有的话等一下要自己添加一下path。
+npm是node.js的包管理工具，安装node.js的时候会顺带一起安装。
+安装成功后在命令行输入下面内容，能看到版本号就说明安装成功了。
+node -v npm -v 安装Hexo 在命令行输入以下命令
+npm install hexo 安装好之后可以输入npx hexo -v查看一下版本。使用npx hexo &lt;command>来执行hexo命令。
+可以选择把hexo目录下的node_modules添加到环境变量，这样就可以在命令行使用hexo &lt;command>执行hexo命令。
+生成网页 创建一个文件夹，在本地存储你的博客项目。在命令行中输入以下命令。
+npx hexo init &lt;文件夹路径> 比如我的路径是C:\Users\Tutoo\Desktop\blog 执行后文件夹里会出现一堆文件。_config.yml文件是网站的配置信息，source是用户资源，我们写的博客就放在source里面，themes存放主题的地方。
+我们先进行继续下一步，其他东西大家可以慢慢研究，现在先把网站搭建起来。
+发布到本地端口 初始化后，生成的Hexo项目里面自带了一个默认主题landscape。主题就是类似皮肤，可以换掉的。
+做到这一步，我们在命令行中进入到Hexo项目的根目录。不会用cd命令的自己查一下。
+输入以下命令
+npx hexo server 然后hexo就会把你现在的项目生成出网页来，然后发布在本地端口，你可以在浏览器中打开http://localhost:4000，来查看网页现在是什么样子的。
+在_config.yml文件里你可以修改一些参数。
+搞好之后网站就是这个样子的。这个主题比较简陋，功能也不多，想要其他更fancy的功能可以去找其他主题。
+看到这里可以直接往下到博客内容管理。
+选个主题（可选） 初始化后，生成的Hexo项目里面自带了一个默认主题landscape。大家可以搜索自己喜欢的主题换掉，Hexo有很多好看的开源的主题。Themes | Hexo
+把你想用的主题下载下来后，解压到themes目录下，然后在Hexo项目的根目录下的_config.yml文件里，把theme更改成对应的主题名称。
+主题目录下的_config.yml文件里，把一些参数替换成你自己的。然后找到里面用到的图片，logo，头像之类的统统替换成你自己的。
+博客内容管理 每一篇博客都对应一个markdown文件。存放的位置是source/_posts/。在命令行中输入
+npx hexo new "first-blog" 就会在source/_posts/生成first-blog.md文件。你就可以在这个文档里用markdown写文章啦。
+如果需要插入图片之类的，我自己的做法是在同一个目录下建一个文件夹来存图片，然后直接用markdown插入图片，大家也可以用图床之类的。
+可以开启server看一下效果。
+发布博客 我们的博客不能只在本地看，要发布到服务器上别人才能访问。
+创建Github Page仓库 在github中新建一个仓库（repository），仓库名必须是用户名.github.io。
+生成静态博客 在_config.yml文件里，16行处的域名替换成你的github page域名，比如https://yinan-hong.github.io/
+25行是生成的静态文件存放的目录。
+在本地项目的根目录，在命令行中输入以下内容
+npx hexo generate 在/public/目录下就生成了博客的静态网页文件。
+发布到云端 Hexo很方便的一点是，可以用git在生成静态文件的同时，发布到云端。
+但我们比较菜，不会用git怎么办？只需要把/public/目录下的所有文件上传到刚才新建的github仓库里就ok了(拖到浏览器里就行)。上传成功后，等待十几秒，就可以通过https://用户名.github.io/访问博客了。
+写在最后 本文是为了帮助新手快速搭建起第一个博客，Hexo还有很多用法，大家可以自行了解。
+其实把网站搭起来并不难，难的地方在于博客的内容。我刚开始写公众号的时候，常常觉得自己知识储备不够，不能做到深刻地探讨一些问题。我的一位老同学跟我说，要有输入才有输出。我觉得他讲的非常有道理。
+之前有同学说我挺强的，真的不是&hellip; 其实我知道我很菜，只不过周围的人可能比我更菜&hellip; 最近挣扎于期末考试和欧洲杯&hellip; 暑假来了，学习计划倒是有，希望这次真的能弯道超一下车吧&hellip;</content></entry><entry><title>KMP算法详解</title><url>https://yinanhong.site/post/kmp/</url><categories><category>算法</category></categories><tags><tag>KMP算法</tag><tag>字符串匹配</tag></tags><content type="html"> 期末没时间，水一篇KMP（Knuth-Morris-Pratt）算法。
+KMP算法是一种字符串匹配算法，其实字符串匹配都是可以暴力求解的，KMP算法是进行了优化，减少了无效的匹配，从而节省时间。
+一道题目 题目描述
+给定一个字符串（模式串）和一些待查找的字符串，求每个待查找字符串在模式串中出现的次数（可重叠） 若使用C++只能include一个头文件iostream；若使用C语言只能include一个头文件stdio 程序中若include多过一个头文件，不看代码，作0分处理 输入
+测试数据有多组（测试组数 &lt;= 5）， 第一行包括一个字符串P，长度不超过105，且非空串 第二行包括一个整数N，代表待查找的字符串数量 (1 &lt;= N &lt;= 5) 接下来的N行，每一行包括一个待查找的字符串，其长度不超过50，且非空串 输出
+对于每组测试数据， 输出每个待查找字符串出现的次数， 具体输出见样例 样例输入
+aabbcc 3 aa bb cc ababab 1 aba 样例输出
+aa:1 bb:1 cc:1 aba:2 题目解析
+这道题就是一个典型的在模式串中匹配子串的题目，我在上课时想快点敲完，就直接用暴力求解了。假设模式串长度为n1，子串长度为n2，暴力求解就是从模式串的s[0]到s[n1 - n2]，挨个对模式串进行匹配。
+这样需要进行 n1 - n2 次匹配，然后每次匹配中，要匹配 n2 个字符，所以时间复杂度是O[(n1-n2)*n2]
+额这样做在普通课程的oj上是可以通过的，但如果是ACM题的话是妥妥的时间超限。是蓝桥杯的话，也是不能通过后几个样例的。
+AC代码
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 #include &lt;iostream>using namespace std; const int LEN = 100001; int main() { char* P = new char[LEN]; char* sub = new char[LEN]; int n; while (cin >> P >> n) { int SIZE = 0; //模式串长度 for (; P[SIZE] != '\0'; SIZE++); //不给引用库函数，自己求一下strlen for (int i = 0; i &lt; n; i++) { //输入子串 cin >> sub; int size = 0; //子串长度 for (; sub[size] != '\0'; size++); int cnt = 0; for (int j = 0; j &lt; SIZE - size + 1; j++) { int matched = 0; //记录匹配的字符数 for (int k = 0; k &lt; size; k++) //模式串片段与子串进行匹配 if (P[j + k] == sub[k]) matched++; else break; if (matched == size) cnt++; } cout &lt;&lt; sub &lt;&lt; ":" &lt;&lt; cnt &lt;&lt; endl; } } delete[] sub; delete[] P; } KMP算法 KMP算法就是会省去很多无效的匹配。其实算法的过程是模拟了人的思维，大家可以体会一下。
+用KMP算法进行字符串匹配时，我们用两个指针i，j分别指向模式串当前匹配到的位置和目标串当前匹配到的位置。在暴力求解中，i指针在每一round都要回溯到main_str[round]的位置，而在KMP算法中是不需要的。
+失配后，下一round从第几位开始匹配？ 下图的例子，在round n+1发生了失配。
+此时i指针不动，j指针回溯，进行round n+2的匹配。
+因为在round n匹配s[2]时，可以理解成同时匹配了round n+2的s[0]字符，所以round n+2中，匹配只需从s[3]开始。
+在对应位置匹配失败后，j指针要回溯到目标串的位置取决于目标串中的重复串。通常将回退位置储存在next数组里面。
+next数组 用KMP算法求解，第一步就是计算next数组，这个数组存的是，子串的某一位发生失配后，需要从子串的第几位开始重新匹配，即失配后子串指针退回到的位置。
+求next数组代码 下面是求next数组的代码，非常抽象，下面解释代码为什么要这样子写。（因为几乎所有教程里，进行匹配时用的指针起名为i，j，求next时候的指针也起名为i，j，实在让新手看得一头雾水。这里为了说明这两对指针没有半毛钱关系，下面我用x，y来命名。）
+1 2 3 4 5 6 7 8 9 10 11 void getNext(char* s, int*&amp; next) { int len = strlen(s); int x = 0, y = -1; //x为当前字符下标，y为寻找重复串的辅助指针 next[0] = -1; //为方便求next和匹配时判断 while (x &lt; len - 1) { if (y == -1 || s[x] == s[y]) next[++x] = ++y; //有重复串，则记录退回位置 else y = next[y]; //不构成重复串，将y指针退回（具体看下面） } } 再说一遍，求next数组就是在子串中找重复串，让失配后回退到对应的位置，减少无效的匹配。
+前三个字符没有构成重复串，所以失配时子串下标均退回到0。line 9保证了，没有构成重复串时，y指针是一直指向首位置的，因为line 7所以next[1]到next[3]的值都是0。
+计算到x == 3时，s[x] == s[y]，即s[3]与s[0]构成重复串，所以如果在s[4]处发生失配，在失配前，s[3]是匹配成功的，说明s[0]也是会匹配成功的，所以下一round的匹配只需从s[1]开始。
+同理，如果在s[5]发生失配，在下一round中只需从s[2]开始进行匹配。
+让这条字符串再多一位，当计算到x == 5时，y == 2，是不会构成重复串的，那line 9就能确保next[6]的值为0。对应的在匹配中的情况是，在s[6]处发生失配，j指针需要退回到0。
+KMP代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 int KMP(char* s_main, char* s_aim) { int len1 = strlen(s_main); int len2 = strlen(s_aim); int* next = new int[len2]; getNext(s_aim, next); int i = 0, j = 0; //模式串位置，目标串位置 while (i &lt; len1 &amp;&amp; j &lt; len2) { //j == -1,即s[0]匹配不成功，i后移，j回到位置0，或 //匹配成功，两个指针均后移 if (j == -1 || s_main[i] == s_aim[j]) i++, j++; else j = next[j]; //失配，回溯j } if (j == len2) //匹配成功，返回模式串中目标串的位置 return i - j; else return -1; } 上面求next的缺陷 如果模式串是这样的，那目标串中的每个a都要和模式串中的b匹配一下，那round 2 到round 6的匹配都是无效的。因为在round 1 中已经确定了，目标串需要至少往后挪6位才有可能匹配到。
+更一般的情况是下面这样的，在round n匹配失败后，回退到第一个c显然是没用的，应该再往前回退。
+改进getNext 其实只用加个判断。如果求next时发现前面有一样的字符，则取前一个字符的next。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 void getNext(char* s, int*&amp; next) { int len = strlen(s); int x = 0, y = -1; //x为当前字符下标，y为寻找重复串的辅助指针 next[0] = -1; while (x &lt; len - 1) { if (y == -1 || s[x] == s[y]) { if (s[++x] == s[++y]) //s[y]==s[x]字符相同，往回取next，避免无效匹配 next[x] = next[y]; //意思是避免匹配了s[x],又倒回去匹配s[y]了（上图的c和c） else next[x] = y; //有重复串，则记录退回位置 } else y = next[y]; //不构成重复串，将y指针退回 } } 往回取next不会影响y的值，这样遇到下面这种情况，求得的next数组是{-1, -1, -1, -1, -1, 5}。进行匹配时，在&rsquo;b&rsquo;处失配，后面的round也只会匹配最后两个字符。
+二道算法题——KMP算法 题目描述
+学习KMP算法，给出主串和模式串，求模式串在主串的位置 输入
+第一个输入t，表示有t个实例 第二行输入第1个实例的主串，第三行输入第1个实例的模式串 以此类推 输出
+第一行输出第1个实例的模式串的next值 第二行输出第1个实例的匹配位置，位置从1开始计算，如果匹配成功输出位置，匹配失败输出0 以此类推 样例输入
+3 qwertyuiop tyu aabbccdd ccc aaaabababac abac 样例输出
+-1 0 0 5 -1 0 1 0 -1 0 0 1 8 题目解析
+通过观察样例，这道题是没有用优化过的next求法的。注意输出从1开始，搜索失败输出0。
+AC代码
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 #include &lt;iostream>#include &lt;string>using namespace std; void getNext(char* s, int*&amp; next) { int len = strlen(s); int x = 0, y = -1; //x为当前字符下标，y为寻找重复串的辅助指针 next[0] = -1; //为方便求next和匹配时判断 while (x &lt; len - 1) { if (y == -1 || s[x] == s[y]) next[++x] = ++y; //有重复串，则记录退回位置 else y = next[y]; //不构成重复串，将y指针退回（具体看下面） } } void print(int* next, int len) { for (int i = 0; i &lt; len; i++) cout &lt;&lt; next[i] &lt;&lt; ' '; cout &lt;&lt; endl; } int KMP(char* s_main, char* s_aim) { int len1 = strlen(s_main); int len2 = strlen(s_aim); int* next = new int[len2]; getNext(s_aim, next); print(next, len2); int i = 0, j = 0; //模式串位置，目标串位置 while (i &lt; len1 &amp;&amp; j &lt; len2) { //j == -1,即s[0]匹配不成功，移动i，j回到位置0 //或匹配成功，两个指针均后移 if (j == -1 || s_main[i] == s_aim[j]) i++, j++; else j = next[j]; //失配，回溯j } if (j == len2) //匹配成功，返回模式串中目标串的位置 return i - j; else return -1; } int main() { int t; const int MAX_LEN = 10001; char* s_main = new char[MAX_LEN]; char* s_aim = new char[MAX_LEN]; cin >> t; while (t--) { cin >> s_main >> s_aim; cout &lt;&lt; KMP(s_main, s_aim) + 1 &lt;&lt; endl; } } 三道算法题——特殊的语言 题目描述
+某城邦的语言，每个字是由两个字母构成的。 考古学家发现把他们的文字数字化之后，当想搜索特定的句子时，总会匹配到错误的地方。 比如一段文字是aabcdaabcdef，想要搜索abcd，应当搜到的是aabcda abcd ef 却会得到额外的一个并不符合该语言语法的结果a abcd aabcdef （因为每个字由两个字符组成，这样匹配就把正确的“字”拆开了）。 请你帮他实现正确的匹配算法。 输入
+每组数据两行，第一行为该语言的主串，第二行为模式串， 都由大写或小写英文字母组成，长度都不超过 10000，且一定为偶数个。 输出
+每组数据输出正确匹配的次数 样例输入
+abcdaabbab ab AbdcAbdcAbqAbdcAbdcAbp AbdcAb 样例输出
+2 2 题目解析
+因为两个字母为一个字，第二个样例中
+AbdcAbdcAbqAbdcAbdcAbp和
+AbdcAbdcAbqAbdcAbdcAbp
+均符合，有重叠，注意不要漏掉。
+AC代码
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 #include &lt;iostream>#include &lt;string.h>using namespace std; void getNext(char* s, int*&amp; next) { int len = strlen(s); int x = 0, y = -1; //x为当前字符下标，y为寻找重复串的辅助指针 next[0] = -1; while (x &lt; len - 1) { if (y == -1 || s[x] == s[y]) { if (s[++x] == s[++y]) next[x] = next[y]; //后一个字符相同，往回取next，避免无效匹配 else next[x] = y; //有重复串，则记录退回位置 } else y = next[y]; //不构成重复串，将y指针退回 } } int KMP(char* str, char* key) { int len1 = strlen(str); int len2 = strlen(key); int* next = new int[len2]; getNext(key, next); int i = 0, j = 0, cnt = 0; while (i &lt; len1) { if (j == -1 || str[i] == key[j]) i++, j++; else j = next[j]; if (j == len2) { //匹配成功 if (i % 2 == 0) //判断匹配位置是否为2的倍数 cnt++; i = i - len2 + 2; //回溯i，否则漏掉重叠 j = 0; //回退j } } delete[] next; return cnt; } int main() { const int MAX = 10086; char str[MAX], key[MAX]; while (cin >> str >> key) { int t = KMP(str, key); cout &lt;&lt; t &lt;&lt; endl; } } 写在后面 额本来想水一下，然后不小心写详细了&hellip;
+kmp算法有点难理解，我举得例子几乎涵盖了所有情况，如果还是看不懂的可以来问我=.=
+参考资料和推荐阅读 有参考：https://www.cnblogs.com/dusf/p/kmp.html
+有参考：http://data.biancheng.net/view/180.html
+推荐阅读：https://zhuanlan.zhihu.com/p/83334559</content></entry><entry><title>AVL树和Trie树</title><url>https://yinanhong.site/post/avltree/</url><categories><category>数据结构</category><category>算法</category></categories><tags><tag>AVL树</tag><tag>平衡二叉树</tag><tag>数据结构</tag><tag>Trie</tag></tags><content type="html"> 本文介绍AVL树和Trie树。Trie树是因为正好做到所以就顺便记录一下。
 文章里插入了一些gif，虽然我已经压缩到了3、4m的样子，但加载起来还是卡卡的，同学们可以等加载好之后刷新一下再看就流畅了。
 AVL树 Wiki: 在计算机科学中，AVL树是最早被发明的自平衡二叉查找树。在AVL树中，任一节点对应的两棵子树的最大高度差为1，因此它也被称为高度平衡树。查找、插入和删除在平均和最坏情况下的时间复杂度都是O(logn)。
 AVL树由前苏联的数学家 Adelse-Velskil 和 Landis 在1962 年提出。
@@ -394,9 +498,7 @@ Xn + Yn = Zn
 Press CTRL+ALT+Delete to end the session.
 Most salamanders are nocturnal, and hunt for insects, worms, and other small creatures.
   The above quote is excerpted from Rob Pike&rsquo;s talk during Gopherfest, November 18, 2015. &#8617;&#xfe0e;</content></entry><entry><title>富文本内容测试</title><url>https://yinanhong.site/post/rich-content/</url><categories/><tags><tag>theme</tag></tags><content type="html"> Hugo 雨果附带几个[内置的短码](https://gohugo.io/content-management/shortcodes/ use-hugos-built-in-shortcodes)内容丰富,以及隐私配置和一组简单的短码,使静态和no-JS版本的各种社会媒体嵌入。
-YouTube Privacy Enhanced Shortcode Twitter Simple Shortcode .twitter-tweet { font: 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; border-left: 4px solid #2b7bb9; padding-left: 1.5em; color: #555; } .twitter-tweet a { color: #2b7bb9; text-decoration: none; } blockquote.twitter-tweet a:hover, blockquote.twitter-tweet a:focus { text-decoration: underline; } “In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”
-— Jan Tschichold pic.twitter.com/gcv7SrhvJb
-&mdash; Graphic Design History (@DesignReviewed) January 17, 2019 Vimeo Simple Shortcode .__h_video { position: relative; padding-bottom: 56.23%; height: 0; overflow: hidden; width: 100%; background: #000; } .__h_video img { width: 100%; height: auto; color: #000; } .__h_video .play { height: 72px; width: 72px; left: 50%; top: 50%; margin-left: -36px; margin-top: -36px; position: absolute; cursor: pointer; }  </content></entry><entry><title>占位符文本显示</title><url>https://yinanhong.site/post/placeholder-text/</url><categories/><tags><tag>markdown</tag></tags><content type="html"> 你对我的心有偏见。我向您保证，我们的生活将不会受到影响，我们的生活将会受到影响。你说你现在住在医院里，因为你的眼睛是透明的，你的眼睛是光明的，你的眼睛是光明的!
+YouTube Privacy Enhanced Shortcode Twitter Simple Shortcode .twitter-tweet { font: 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; border-left: 4px solid #2b7bb9; padding-left: 1.5em; color: #555; } .twitter-tweet a { color: #2b7bb9; text-decoration: none; } blockquote.twitter-tweet a:hover, blockquote.twitter-tweet a:focus { text-decoration: underline; } Vimeo Simple Shortcode .__h_video { position: relative; padding-bottom: 56.23%; height: 0; overflow: hidden; width: 100%; background: #000; } .__h_video img { width: 100%; height: auto; color: #000; } .__h_video .play { height: 72px; width: 72px; left: 50%; top: 50%; margin-left: -36px; margin-top: -36px; position: absolute; cursor: pointer; }  </content></entry><entry><title>占位符文本显示</title><url>https://yinanhong.site/post/placeholder-text/</url><categories/><tags><tag>markdown</tag></tags><content type="html"> 你对我的心有偏见。我向您保证，我们的生活将不会受到影响，我们的生活将会受到影响。你说你现在住在医院里，因为你的眼睛是透明的，你的眼睛是光明的，你的眼睛是光明的!
 Exierant elisi ambit vivere dedere Duce pollice Eris modo Spargitque ferrea quos palude Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.
 Comas hunc haec pietate fetum procerum dixit Post torum vates letum Tiresia Flumen querellas Arcanaque montibus omnes Quidem et Vagus elidunt
 The Van de Graaf Canon

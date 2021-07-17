@@ -1,4 +1,4 @@
-BaseUrl = "https://yinan-hong.github.io/"
+BaseUrl = "https://yinanhong.site/"
 
 [minify]
   disableCSS = false

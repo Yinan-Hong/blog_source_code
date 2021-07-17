@@ -55,9 +55,9 @@
 [ArticleDeclaration]
   other = "Declaration"
 [ArticleDecContent]
-  other = "This blog post article is under the <a href='https://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank' style='text-decoration: underline;'>CC BY-NC-SA 3.0</a> license,Please indicate the source!"
+  other = "This blog post article is under the <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank' style='text-decoration: underline;'>CC BY-NC-SA 4.0</a> license,Please indicate the source!"
 [RewardTips]
-  other = "If it helps, feel free to tip a bit. ^_^"
+  other = "If it helps ^_^"
 [RewardBtnText]
   other = "Reward"
 [RewardWxPay]
@@ -65,4 +65,4 @@
 [RewardAliPay]
   other = "Ali Pay"
 [CommentPh]
-  other = "Still developing, not available...   You can contact me by Wechat though."
+  other = "Leave your comment."

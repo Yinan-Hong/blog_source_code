@@ -1,6 +1,6 @@
 Title =  "Bunny's website."
-BaseUrl = "https://yinan-hong.github.io/"
-publishdir = "/public"
+BaseUrl = "https://yinanhong.site"
+publishdir = "/cloud"
 
 DefaultContentLanguage = "zh-cn"
 LanguageCode = "zh-CN"

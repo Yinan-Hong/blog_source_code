@@ -10,12 +10,12 @@
   Enable = true
   Module = "Waline"
   LiveReId = "Your LiveReId"
-  WalineSerURL = "https://bwc-r7t6uo7zv-yinan-hong.vercel.app"
+  WalineSerURL = "https://waline-three.vercel.app/"
 
 [LeanCloud]
-  AppId = "7yW5FhLkR7nUz9hQVintOiaI-gzGzoHsz"
-  AppKey = "EAzJRBKGIWSUXwFBsmomInpt"
-  ServerURL = "https://7yw5fhlk.lc-cn-n1-shared.com"
+  AppId = "zW8JImTBYzSSqrOBJBIKuG2l-MdYXbMMI"
+  AppKey = "kn6XMgXB7RADF5jYtYyW6TPU"
+  ServerURL = "zw8jimtb.api.lncldglobal.com"
 
 [Statis]
   BusuanziCounter = true

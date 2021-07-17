@@ -55,9 +55,9 @@
 [ArticleDeclaration]
   other = "声明"
 [ArticleDecContent]
-  other = "本站文章除特别声明外，均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank' style='text-decoration: underline;'>CC BY-NC-SA 3.0</a>许可协议，转载请注明出处！"
+  other = "本站文章除特别声明外，均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank' style='text-decoration: underline;'>CC BY-NC-SA 4.0</a>许可协议，禁止商业使用，转载请注明出处！"
 [RewardTips]
-  other = "创作实属不易，打赏可以随意 ^_^"
+  other = "创作实属不易，你看着办 OwO"
 [RewardBtnText]
   other = "赏"
 [RewardWxPay]
@@ -65,4 +65,4 @@
 [RewardAliPay]
   other = "支付宝打赏"
 [CommentPh]
-  other = "评论功能仍在开发中，暂未上线..."
+  other = "发条评论试试~"

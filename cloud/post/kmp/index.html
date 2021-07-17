@@ -1,0 +1,482 @@
+<!doctype html><html lang=zh-cn dir=content/zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=content-security-policy content="upgrade-insecure-requests"><title>KMP算法详解 - 兔兔的网站</title><meta name=keywords content="博客,码农,C/C++,算法,流行音乐,漫威"><meta name=author content="兔楠"><meta property="og:title" content="KMP算法详解"><meta property="og:site_name" content="兔兔的网站"><meta property="og:image" content="/img/author.jpg"><meta name=title content="KMP算法详解 - 兔兔的网站"><meta name=description content="欢迎访问兔兔的网站。兔兔现在是物联网工程专业本科生。"><link rel="shortcut icon" href=/img/favicon.ico><link rel=apple-touch-icon href=/img/headpic.jpg><link rel=apple-touch-icon-precomposed href=/img/headpic.jpg><link href=//cdn.bootcdn.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css rel=stylesheet type=text/css><link href=//cdn.bootcdn.net/ajax/libs/imageviewer/0.1.0/viewer.min.css rel=stylesheet><link href=/css/main.css rel=stylesheet type=text/css><link href=/css/oceanicnext.min.css rel=stylesheet><script src=/js/highlight.js></script><script src=/js/highlight.min.js></script><script>hljs.initHighlightingOnLoad()</script><script type=text/javascript>var _hmt=_hmt||[];(function(){var a=document.createElement("script"),b;a.src="https://hm.baidu.com/hm.js?Your BaiduSiteId",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script async src="https://www.googletagmanager.com/gtag/js?id=Your%20GoogleSiteId"></script><script type=text/javascript>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','Your GoogleSiteId ')</script></head><body itemscope itemtype=http://schema.org/WebPage lang=zh-hans><div class="container one-collumn sidebar-position-left page-home"><div class=headband></div><header id=header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle role=button style=opacity:1;top:0><span class=toggle-line></span><span class=toggle-line></span><span class=toggle-line></span></div></div><div class=site-meta><div class=multi-lang-switch><i class="fa fa-fw fa-language" style=margin-right:5px></i>
+<a class=lang-link id=zh-cn href=#>中文</a></div><div class=custom-logo-site-title><a href=/ class=brand rel=start><span class=logo-line-before><i></i></span>
+<span class=site-title>兔兔的网站</span>
+<span class=logo-line-after><i></i></span></a></div><p class=site-subtitle>专业写bug二分之π年</p></div><div class=site-nav-right><div class="toggle popup-trigger" style=opacity:1;top:0><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class=site-nav><ul id=menu class=menu><li class=menu-item><a href=/ rel=section><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class=menu-item><a href=/post rel=section><i class="menu-item-icon fa fa-fw fa-archive"></i><br>所有文章</a></li><li class=menu-item><a href=/about.html rel=section><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于我</a></li><li class=menu-item><a href=/404.html rel=section><i class="menu-item-icon fa fa-fw fa-heartbeat"></i><br>公益404</a></li><li class="menu-item menu-item-search"><a href=javascript:; class=popup-trigger><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class=site-search><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class=search-icon><i class="fa fa-search"></i></span>
+<span class=popup-btn-close><i class="fa fa-times-circle"></i></span><div class=local-search-input-wrapper><input autocomplete=off placeholder=搜索关键字... spellcheck=false type=text id=local-search-input autocapitalize=none autocorrect=off></div></div><div id=local-search-result></div></div></div></nav></div></header><main id=main class=main><div class=main-inner><div class=content-wrap><div id=content class=content><section id=posts class=posts-expand><article class="post post-type-normal" itemscope itemtype=http://schema.org/Article><header class=post-header><h1 class=post-title itemprop="name headline"><a class=post-title-link href=https://yinanhong.site/post/kmp/ itemprop=url>KMP算法详解</a></h1><div class=post-meta><span class=post-time><i class="fa fa-calendar-o fa-fw"></i>
+<span class=post-meta-item-text>时间：</span>
+<time itemprop=dateCreated datetime=2016-03-22T13:04:35+08:00 content="2021-07-03">2021-07-03</time></span>
+<span class=post-category>&nbsp; | &nbsp;
+<i class="fa fa-folder-o fa-fw"></i>
+<span class=post-meta-item-text>分类：</span>
+<span itemprop=about itemscope itemtype=https://schema.org/Thing><a href=/categories/%E7%AE%97%E6%B3%95 itemprop=url rel=index style=text-decoration:underline><span itemprop=name>算法</span></a>
+&nbsp;</span></span>
+<span>|
+<i class="fa fa-file-word-o fa-fw"></i>
+<span class=post-meta-item-text>字数：</span>
+<span class=leancloud-world-count>4049 字</span></span>
+<span>|
+<i class="fa fa-eye fa-fw"></i>
+<span class=post-meta-item-text>阅读：</span>
+<span class=leancloud-view-count>9分钟</span></span>
+<span id=/post/kmp/ class=leancloud_visitors data-flag-title=KMP算法详解>|
+<i class="fa fa-binoculars fa-fw"></i>
+<span class=post-meta-item-text>阅读次数：</span>
+<span class=leancloud-visitors-count></span></span></div></header><div class=post-body itemprop=articleBody><p>期末没时间，水一篇KMP（Knuth-Morris-Pratt）算法。</p><p>KMP算法是一种字符串匹配算法，其实字符串匹配都是可以暴力求解的，KMP算法是进行了优化，减少了无效的匹配，从而节省时间。</p><h2 id=一道题目>一道题目</h2><p>题目描述</p><pre><code>给定一个字符串（模式串）和一些待查找的字符串，求每个待查找字符串在模式串中出现的次数（可重叠）
+若使用C++只能include一个头文件iostream；若使用C语言只能include一个头文件stdio
+程序中若include多过一个头文件，不看代码，作0分处理
+</code></pre><p>输入</p><pre><code>测试数据有多组（测试组数 &lt;= 5），
+第一行包括一个字符串P，长度不超过105，且非空串
+第二行包括一个整数N，代表待查找的字符串数量 (1 &lt;= N &lt;= 5)
+接下来的N行，每一行包括一个待查找的字符串，其长度不超过50，且非空串
+</code></pre><p>输出</p><pre><code>对于每组测试数据，
+输出每个待查找字符串出现的次数，
+具体输出见样例
+</code></pre><p>样例输入</p><pre><code>aabbcc
+3
+aa
+bb
+cc
+ababab
+1
+aba
+</code></pre><p>样例输出</p><pre><code>aa:1
+bb:1
+cc:1
+aba:2
+</code></pre><p>题目解析</p><p>这道题就是一个典型的在模式串中匹配子串的题目，我在上课时想快点敲完，就直接用暴力求解了。假设模式串长度为n1，子串长度为n2，暴力求解就是从模式串的s[0]到s[n1 - n2]，挨个对模式串进行匹配。</p><p><img src=../kmpPic/Snipaste_2021-07-03_18-00-22.png alt=Snipaste_2021-07-03_18-00-22 style=zoom:60%></p><p>这样需要进行 n1 - n2 次匹配，然后每次匹配中，要匹配 n2 个字符，所以时间复杂度是O[(n1-n2)*n2]</p><p>额这样做在普通课程的oj上是可以通过的，但如果是ACM题的话是妥妥的时间超限。是蓝桥杯的话，也是不能通过后几个样例的。</p><p>AC代码</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;iostream&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#000;font-weight:700>using</span> <span style=color:#000;font-weight:700>namespace</span> std;
+
+<span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>int</span> LEN <span style=color:#000;font-weight:700>=</span> <span style=color:#099>100001</span>;
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+	<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> P <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>char</span>[LEN];
+	<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> sub <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>char</span>[LEN];
+	<span style=color:#458;font-weight:700>int</span> n;
+	<span style=color:#000;font-weight:700>while</span> (cin <span style=color:#000;font-weight:700>&gt;&gt;</span> P <span style=color:#000;font-weight:700>&gt;&gt;</span> n) {
+		<span style=color:#458;font-weight:700>int</span>  SIZE <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;	<span style=color:#998;font-style:italic>//模式串长度
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>for</span> (; P[SIZE] <span style=color:#000;font-weight:700>!=</span> <span style=color:#d14>&#39;\0&#39;</span>; SIZE<span style=color:#000;font-weight:700>++</span>);	<span style=color:#998;font-style:italic>//不给引用库函数，自己求一下strlen
+</span><span style=color:#998;font-style:italic></span>
+		<span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {	<span style=color:#998;font-style:italic>//输入子串
+</span><span style=color:#998;font-style:italic></span>			cin <span style=color:#000;font-weight:700>&gt;&gt;</span> sub;
+			<span style=color:#458;font-weight:700>int</span> size <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;	<span style=color:#998;font-style:italic>//子串长度
+</span><span style=color:#998;font-style:italic></span>			<span style=color:#000;font-weight:700>for</span> (; sub[size] <span style=color:#000;font-weight:700>!=</span> <span style=color:#d14>&#39;\0&#39;</span>; size<span style=color:#000;font-weight:700>++</span>);
+
+			<span style=color:#458;font-weight:700>int</span> cnt <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+			<span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; j <span style=color:#000;font-weight:700>&lt;</span> SIZE <span style=color:#000;font-weight:700>-</span> size <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>; j<span style=color:#000;font-weight:700>++</span>) {
+				<span style=color:#458;font-weight:700>int</span> matched <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;	<span style=color:#998;font-style:italic>//记录匹配的字符数
+</span><span style=color:#998;font-style:italic></span>				<span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; k <span style=color:#000;font-weight:700>&lt;</span> size; k<span style=color:#000;font-weight:700>++</span>)	<span style=color:#998;font-style:italic>//模式串片段与子串进行匹配
+</span><span style=color:#998;font-style:italic></span>					<span style=color:#000;font-weight:700>if</span> (P[j <span style=color:#000;font-weight:700>+</span> k] <span style=color:#000;font-weight:700>==</span> sub[k])
+						matched<span style=color:#000;font-weight:700>++</span>;
+					<span style=color:#000;font-weight:700>else</span>
+						<span style=color:#000;font-weight:700>break</span>;
+				<span style=color:#000;font-weight:700>if</span> (matched <span style=color:#000;font-weight:700>==</span> size)
+					cnt<span style=color:#000;font-weight:700>++</span>;
+			}
+			cout <span style=color:#000;font-weight:700>&lt;&lt;</span> sub <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#d14>&#34;:&#34;</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> cnt <span style=color:#000;font-weight:700>&lt;&lt;</span> endl;
+		}
+	}
+	<span style=color:#000;font-weight:700>delete</span>[] sub;
+	<span style=color:#000;font-weight:700>delete</span>[] P;
+}
+</code></pre></td></tr></table></div></div><h2 id=kmp算法>KMP算法</h2><p>KMP算法就是会省去很多无效的匹配。其实算法的过程是模拟了人的思维，大家可以体会一下。</p><p>用KMP算法进行字符串匹配时，我们用两个指针i，j分别指向<font style=background:BlanchedAlmond><strong>模式串当前匹配到的位置</strong></font>和<font style=background:BlanchedAlmond><strong>目标串当前匹配到的位置</strong></font>。在暴力求解中，i指针在每一round都要回溯到main_str[round]的位置，而在KMP算法中是不需要的。</p><p><img src=../kmpPic/Snipaste_2021-07-04_00-22-08.png alt=Snipaste_2021-07-04_00-22-08></p><h3 id=失配后下一round从第几位开始匹配>失配后，下一round从第几位开始匹配？</h3><p>下图的例子，在round n+1发生了失配。</p><p><img src=../kmpPic/Snipaste_2021-07-04_00-22-39.png alt=Snipaste_2021-07-04_00-22-39></p><p>此时i指针不动，j指针回溯，进行round n+2的匹配。</p><p><img src=../kmpPic/Snipaste_2021-07-04_00-22-56.png alt=Snipaste_2021-07-04_00-22-56></p><p>因为在round n匹配s[2]时，可以理解成同时匹配了round n+2的s[0]字符，所以round n+2中，匹配只需从s[3]开始。</p><p>在对应位置匹配失败后，<strong>j指针要回溯到目标串的位置取决于目标串中的重复串</strong>。通常将回退位置储存在next数组里面。</p><h2 id=next数组>next数组</h2><p>用KMP算法求解，第一步就是计算next数组，这个数组存的是，<strong>子串的某一位发生失配后，需要从子串的第几位开始重新匹配，即失配后子串指针退回到的位置</strong>。</p><h3 id=求next数组代码>求next数组代码</h3><p>下面是求next数组的代码，非常抽象，下面解释代码为什么要这样子写。（因为几乎所有教程里，进行匹配时用的指针起名为i，j，求next时候的指针也起名为i，j，实在让新手看得一头雾水。这里为了说明这两对指针没有半毛钱关系，下面我用x，y来命名。）</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>getNext</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s, <span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*&amp;</span> next) {
+	<span style=color:#458;font-weight:700>int</span> len <span style=color:#000;font-weight:700>=</span> strlen(s);
+	<span style=color:#458;font-weight:700>int</span> x <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, y <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;	<span style=color:#998;font-style:italic>//x为当前字符下标，y为寻找重复串的辅助指针
+</span><span style=color:#998;font-style:italic></span>	next[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>; <span style=color:#998;font-style:italic>//为方便求next和匹配时判断
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>while</span> (x <span style=color:#000;font-weight:700>&lt;</span> len <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>) {
+		<span style=color:#000;font-weight:700>if</span> (y <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s[x] <span style=color:#000;font-weight:700>==</span> s[y])
+				next[<span style=color:#000;font-weight:700>++</span>x] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>++</span>y; <span style=color:#998;font-style:italic>//有重复串，则记录退回位置
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>else</span>
+			y <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//不构成重复串，将y指针退回（具体看下面）
+</span><span style=color:#998;font-style:italic></span>	}
+}
+</code></pre></td></tr></table></div></div><p>再说一遍，求next数组就是<strong>在子串中找重复串</strong>，让失配后回退到对应的位置，减少无效的匹配。</p><p><img src=../kmpPic/Snipaste_2021-07-03_21-47-44.png alt=Snipaste_2021-07-03_21-47-44 style=zoom:50%></p><p>前三个字符没有构成重复串，所以失配时子串下标均退回到0。<code>line 9</code>保证了，没有构成重复串时，y指针是一直指向首位置的，因为<code>line 7</code>所以next[1]到next[3]的值都是0。</p><p>计算到x == 3时，s[x] == s[y]，即s[3]与s[0]构成重复串，所以如果在s[4]处发生失配，在失配前，s[3]是匹配成功的，说明s[0]也是会匹配成功的，所以下一round的匹配只需从s[1]开始。</p><p>同理，如果在s[5]发生失配，在下一round中只需从s[2]开始进行匹配。</p><p><img src=../kmpPic/Snipaste_2021-07-03_22-45-00.png alt=Snipaste_2021-07-03_22-45-00 style=zoom:67%></p><p>让这条字符串再多一位，当计算到x == 5时，y == 2，是不会构成重复串的，那<code>line 9</code>就能确保next[6]的值为0。对应的在匹配中的情况是，在s[6]处发生失配，j指针需要退回到0。</p><p><img src=../kmpPic/Snipaste_2021-07-03_22-52-46.png alt=Snipaste_2021-07-03_22-52-46></p><h2 id=kmp代码>KMP代码</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>KMP</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_main, <span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_aim) {
+	<span style=color:#458;font-weight:700>int</span> len1 <span style=color:#000;font-weight:700>=</span> strlen(s_main);
+	<span style=color:#458;font-weight:700>int</span> len2 <span style=color:#000;font-weight:700>=</span> strlen(s_aim);
+	<span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*</span> next <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>int</span>[len2];
+	getNext(s_aim, next);
+	<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:#998;font-style:italic>//模式串位置，目标串位置
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> len1 <span style=color:#000;font-weight:700>&amp;&amp;</span> j <span style=color:#000;font-weight:700>&lt;</span> len2) {
+		<span style=color:#998;font-style:italic>//j == -1,即s[0]匹配不成功，i后移，j回到位置0，或
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#998;font-style:italic>//匹配成功，两个指针均后移
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s_main[i] <span style=color:#000;font-weight:700>==</span> s_aim[j])
+			i<span style=color:#000;font-weight:700>++</span>, j<span style=color:#000;font-weight:700>++</span>;
+		<span style=color:#000;font-weight:700>else</span>
+			j <span style=color:#000;font-weight:700>=</span> next[j]; <span style=color:#998;font-style:italic>//失配，回溯j
+</span><span style=color:#998;font-style:italic></span>	}
+	<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> len2) <span style=color:#998;font-style:italic>//匹配成功，返回模式串中目标串的位置
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>return</span> i <span style=color:#000;font-weight:700>-</span> j;
+	<span style=color:#000;font-weight:700>else</span>
+		<span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+}
+</code></pre></td></tr></table></div></div><h2 id=上面求next的缺陷>上面求next的缺陷</h2><p>如果模式串是这样的，那目标串中的<strong>每个a都要和模式串中的b匹配一下</strong>，那round 2 到round 6的匹配都是无效的。因为在round 1 中已经确定了，目标串需要至少往后挪6位才有可能匹配到。</p><p><img src=../kmpPic/Snipaste_2021-07-03_18-11-23.png alt=Snipaste_2021-07-03_18-11-23 style=zoom:60%></p><p>更一般的情况是下面这样的，在round n匹配失败后，回退到第一个<code>c</code>显然是没用的，应该再往前回退。</p><p><img src=../kmpPic/Snipaste_2021-07-03_23-37-21.png alt=Snipaste_2021-07-03_23-37-21 style=zoom:60%></p><h3 id=改进getnext>改进getNext</h3><p>其实只用加个判断。如果求next时发现前面有一样的字符，则取前一个字符的next。</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>getNext</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s, <span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*&amp;</span> next) {
+	<span style=color:#458;font-weight:700>int</span> len <span style=color:#000;font-weight:700>=</span> strlen(s);
+	<span style=color:#458;font-weight:700>int</span> x <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, y <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;	<span style=color:#998;font-style:italic>//x为当前字符下标，y为寻找重复串的辅助指针
+</span><span style=color:#998;font-style:italic></span>	next[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+	<span style=color:#000;font-weight:700>while</span> (x <span style=color:#000;font-weight:700>&lt;</span> len <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>) {
+		<span style=color:#000;font-weight:700>if</span> (y <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s[x] <span style=color:#000;font-weight:700>==</span> s[y]) {
+			<span style=color:#000;font-weight:700>if</span> (s[<span style=color:#000;font-weight:700>++</span>x] <span style=color:#000;font-weight:700>==</span> s[<span style=color:#000;font-weight:700>++</span>y]) <span style=color:#998;font-style:italic>//s[y]==s[x]字符相同，往回取next，避免无效匹配
+</span><span style=color:#998;font-style:italic></span>				next[x] <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//意思是避免匹配了s[x],又倒回去匹配s[y]了（上图的c和c）
+</span><span style=color:#998;font-style:italic></span>			<span style=color:#000;font-weight:700>else</span>
+				next[x] <span style=color:#000;font-weight:700>=</span> y; <span style=color:#998;font-style:italic>//有重复串，则记录退回位置
+</span><span style=color:#998;font-style:italic></span>		}
+		<span style=color:#000;font-weight:700>else</span>
+			y <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//不构成重复串，将y指针退回
+</span><span style=color:#998;font-style:italic></span>	}
+}
+</code></pre></td></tr></table></div></div><p>往回取next不会影响y的值，这样遇到下面这种情况，求得的next数组是{-1, -1, -1, -1, -1, 5}。进行匹配时，在&rsquo;b&rsquo;处失配，后面的round也只会匹配最后两个字符。</p><p><img src=../kmpPic/Snipaste_2021-07-03_19-18-51.png alt=Snipaste_2021-07-03_19-18-51 style=zoom:67%></p><h2 id=二道算法题kmp算法>二道算法题——KMP算法</h2><p>题目描述</p><pre><code>学习KMP算法，给出主串和模式串，求模式串在主串的位置
+</code></pre><p>输入</p><pre><code>第一个输入t，表示有t个实例
+第二行输入第1个实例的主串，第三行输入第1个实例的模式串
+以此类推
+</code></pre><p>输出</p><pre><code>第一行输出第1个实例的模式串的next值
+第二行输出第1个实例的匹配位置，位置从1开始计算，如果匹配成功输出位置，匹配失败输出0
+以此类推
+</code></pre><p>样例输入</p><pre><code>3
+qwertyuiop
+tyu
+aabbccdd
+ccc
+aaaabababac
+abac
+</code></pre><p>样例输出</p><pre><code>-1 0 0
+5
+-1 0 1
+0
+-1 0 0 1
+8
+</code></pre><p>题目解析</p><p>通过观察样例，这道题是没有用优化过的next求法的。注意输出从1开始，搜索失败输出0。</p><p>AC代码</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;iostream&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#000;font-weight:700>using</span> <span style=color:#000;font-weight:700>namespace</span> std;
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>getNext</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s, <span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*&amp;</span> next) {
+	<span style=color:#458;font-weight:700>int</span> len <span style=color:#000;font-weight:700>=</span> strlen(s);
+	<span style=color:#458;font-weight:700>int</span> x <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, y <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;	<span style=color:#998;font-style:italic>//x为当前字符下标，y为寻找重复串的辅助指针
+</span><span style=color:#998;font-style:italic></span>	next[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>; <span style=color:#998;font-style:italic>//为方便求next和匹配时判断
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>while</span> (x <span style=color:#000;font-weight:700>&lt;</span> len <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>) {
+		<span style=color:#000;font-weight:700>if</span> (y <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s[x] <span style=color:#000;font-weight:700>==</span> s[y])
+			next[<span style=color:#000;font-weight:700>++</span>x] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>++</span>y; <span style=color:#998;font-style:italic>//有重复串，则记录退回位置
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>else</span>
+			y <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//不构成重复串，将y指针退回（具体看下面）
+</span><span style=color:#998;font-style:italic></span>	}
+}
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>print</span>(<span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*</span> next, <span style=color:#458;font-weight:700>int</span> len) {
+	<span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> len; i<span style=color:#000;font-weight:700>++</span>)
+		cout <span style=color:#000;font-weight:700>&lt;&lt;</span> next[i] <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#d14>&#39; &#39;</span>;
+	cout <span style=color:#000;font-weight:700>&lt;&lt;</span> endl;
+}
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>KMP</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_main, <span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_aim) {
+	<span style=color:#458;font-weight:700>int</span> len1 <span style=color:#000;font-weight:700>=</span> strlen(s_main);
+	<span style=color:#458;font-weight:700>int</span> len2 <span style=color:#000;font-weight:700>=</span> strlen(s_aim);
+	<span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*</span> next <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>int</span>[len2];
+	getNext(s_aim, next);
+	print(next, len2);
+
+	<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:#998;font-style:italic>//模式串位置，目标串位置
+</span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> len1 <span style=color:#000;font-weight:700>&amp;&amp;</span> j <span style=color:#000;font-weight:700>&lt;</span> len2) {
+		<span style=color:#998;font-style:italic>//j == -1,即s[0]匹配不成功，移动i，j回到位置0
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#998;font-style:italic>//或匹配成功，两个指针均后移
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s_main[i] <span style=color:#000;font-weight:700>==</span> s_aim[j])
+			i<span style=color:#000;font-weight:700>++</span>, j<span style=color:#000;font-weight:700>++</span>;
+		<span style=color:#000;font-weight:700>else</span>
+			j <span style=color:#000;font-weight:700>=</span> next[j]; <span style=color:#998;font-style:italic>//失配，回溯j
+</span><span style=color:#998;font-style:italic></span>	}
+	<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> len2) <span style=color:#998;font-style:italic>//匹配成功，返回模式串中目标串的位置
+</span><span style=color:#998;font-style:italic></span>		<span style=color:#000;font-weight:700>return</span> i <span style=color:#000;font-weight:700>-</span> j;
+	<span style=color:#000;font-weight:700>else</span>
+		<span style=color:#000;font-weight:700>return</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+}
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+	<span style=color:#458;font-weight:700>int</span> t;
+	<span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>int</span> MAX_LEN <span style=color:#000;font-weight:700>=</span> <span style=color:#099>10001</span>;
+	<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_main <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>char</span>[MAX_LEN];
+	<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s_aim <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>char</span>[MAX_LEN];
+	cin <span style=color:#000;font-weight:700>&gt;&gt;</span> t;
+	<span style=color:#000;font-weight:700>while</span> (t<span style=color:#000;font-weight:700>--</span>) {
+		cin <span style=color:#000;font-weight:700>&gt;&gt;</span> s_main <span style=color:#000;font-weight:700>&gt;&gt;</span> s_aim;
+		cout <span style=color:#000;font-weight:700>&lt;&lt;</span> KMP(s_main, s_aim) <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> endl;
+	}
+}
+</code></pre></td></tr></table></div></div><h2 id=三道算法题特殊的语言>三道算法题——特殊的语言</h2><p>题目描述</p><pre><code>某城邦的语言，每个字是由两个字母构成的。
+考古学家发现把他们的文字数字化之后，当想搜索特定的句子时，总会匹配到错误的地方。
+比如一段文字是aabcdaabcdef，想要搜索abcd，应当搜到的是aabcda abcd ef
+却会得到额外的一个并不符合该语言语法的结果a abcd aabcdef
+（因为每个字由两个字符组成，这样匹配就把正确的“字”拆开了）。
+请你帮他实现正确的匹配算法。
+</code></pre><p>输入</p><pre><code>每组数据两行，第一行为该语言的主串，第二行为模式串，
+都由大写或小写英文字母组成，长度都不超过 10000，且一定为偶数个。
+</code></pre><p>输出</p><pre><code>每组数据输出正确匹配的次数
+</code></pre><p>样例输入</p><pre><code>abcdaabbab
+ab
+AbdcAbdcAbqAbdcAbdcAbp
+AbdcAb
+</code></pre><p>样例输出</p><pre><code>2
+2
+</code></pre><p>题目解析</p><p>因为两个字母为一个字，第二个样例中</p><p><strong>AbdcAb</strong>dcAbqAbdcAbdcAbp和</p><p>Abdc<strong>AbdcAb</strong>qAbdcAbdcAbp</p><p>均符合，有重叠，注意不要漏掉。</p><p>AC代码</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;iostream&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#000;font-weight:700>using</span> <span style=color:#000;font-weight:700>namespace</span> std;
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>getNext</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> s, <span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*&amp;</span> next) {
+	<span style=color:#458;font-weight:700>int</span> len <span style=color:#000;font-weight:700>=</span> strlen(s);
+	<span style=color:#458;font-weight:700>int</span> x <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, y <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;	<span style=color:#998;font-style:italic>//x为当前字符下标，y为寻找重复串的辅助指针
+</span><span style=color:#998;font-style:italic></span>	next[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+	<span style=color:#000;font-weight:700>while</span> (x <span style=color:#000;font-weight:700>&lt;</span> len <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>) {
+		<span style=color:#000;font-weight:700>if</span> (y <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> s[x] <span style=color:#000;font-weight:700>==</span> s[y]) {
+			<span style=color:#000;font-weight:700>if</span> (s[<span style=color:#000;font-weight:700>++</span>x] <span style=color:#000;font-weight:700>==</span> s[<span style=color:#000;font-weight:700>++</span>y])
+				next[x] <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//后一个字符相同，往回取next，避免无效匹配
+</span><span style=color:#998;font-style:italic></span>			<span style=color:#000;font-weight:700>else</span>
+				next[x] <span style=color:#000;font-weight:700>=</span> y; <span style=color:#998;font-style:italic>//有重复串，则记录退回位置
+</span><span style=color:#998;font-style:italic></span>		}
+		<span style=color:#000;font-weight:700>else</span>
+			y <span style=color:#000;font-weight:700>=</span> next[y]; <span style=color:#998;font-style:italic>//不构成重复串，将y指针退回
+</span><span style=color:#998;font-style:italic></span>	}
+}
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>KMP</span>(<span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> str, <span style=color:#458;font-weight:700>char</span><span style=color:#000;font-weight:700>*</span> key) {
+	<span style=color:#458;font-weight:700>int</span> len1 <span style=color:#000;font-weight:700>=</span> strlen(str);
+	<span style=color:#458;font-weight:700>int</span> len2 <span style=color:#000;font-weight:700>=</span> strlen(key);
+	<span style=color:#458;font-weight:700>int</span><span style=color:#000;font-weight:700>*</span> next <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>new</span> <span style=color:#458;font-weight:700>int</span>[len2];
+	getNext(key, next);
+
+	<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, cnt <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+	<span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> len1) {
+		<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> str[i] <span style=color:#000;font-weight:700>==</span> key[j])
+			i<span style=color:#000;font-weight:700>++</span>, j<span style=color:#000;font-weight:700>++</span>;
+		<span style=color:#000;font-weight:700>else</span>
+			j <span style=color:#000;font-weight:700>=</span> next[j];
+		<span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> len2) { <span style=color:#998;font-style:italic>//匹配成功
+</span><span style=color:#998;font-style:italic></span>			<span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>%</span> <span style=color:#099>2</span> <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) <span style=color:#998;font-style:italic>//判断匹配位置是否为2的倍数
+</span><span style=color:#998;font-style:italic></span>				cnt<span style=color:#000;font-weight:700>++</span>;
+			i <span style=color:#000;font-weight:700>=</span> i <span style=color:#000;font-weight:700>-</span> len2 <span style=color:#000;font-weight:700>+</span> <span style=color:#099>2</span>; <span style=color:#998;font-style:italic>//回溯i，否则漏掉重叠
+</span><span style=color:#998;font-style:italic></span>			j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:#998;font-style:italic>//回退j
+</span><span style=color:#998;font-style:italic></span>		}
+	}
+	<span style=color:#000;font-weight:700>delete</span>[] next;
+	<span style=color:#000;font-weight:700>return</span> cnt;
+}
+
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+	<span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>int</span> MAX <span style=color:#000;font-weight:700>=</span> <span style=color:#099>10086</span>;
+	<span style=color:#458;font-weight:700>char</span> str[MAX], key[MAX];
+	<span style=color:#000;font-weight:700>while</span> (cin <span style=color:#000;font-weight:700>&gt;&gt;</span> str <span style=color:#000;font-weight:700>&gt;&gt;</span> key) {
+		<span style=color:#458;font-weight:700>int</span> t <span style=color:#000;font-weight:700>=</span> KMP(str, key);
+		cout <span style=color:#000;font-weight:700>&lt;&lt;</span> t <span style=color:#000;font-weight:700>&lt;&lt;</span> endl;
+	}
+}
+</code></pre></td></tr></table></div></div><h2 id=写在后面>写在后面</h2><p>额本来想水一下，然后不小心写详细了&mldr;</p><p>kmp算法有点难理解，我举得例子几乎涵盖了所有情况，如果还是看不懂的可以来问我=.=</p><h2 id=参考资料和推荐阅读>参考资料和推荐阅读</h2><p>有参考：https://www.cnblogs.com/dusf/p/kmp.html</p><p>有参考：http://data.biancheng.net/view/180.html</p><p>推荐阅读：https://zhuanlan.zhihu.com/p/83334559</p></div><footer class=post-footer><div class=post-tags><a href=/tags/kmp%e7%ae%97%e6%b3%95 rel=tag title=KMP算法>#KMP算法#</a>
+<a href=/tags/%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%8c%b9%e9%85%8d rel=tag title=字符串匹配>#字符串匹配#</a></div><div class=addthis_inline_share_toolbox></div><div class=post-nav><div class=article-copyright><div class=article-copyright-img><img src=/img/wechat.jpg width=129px height=129px><div style=text-align:center>交个朋友@_@</div></div><div class=article-copyright-info><p><span>声明：</span>KMP算法详解</p><p><span>链接：</span>https://yinanhong.site/post/kmp/</p><p><span>作者：</span>兔楠</p><p><span>声明： </span>本站文章除特别声明外，均采用 <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank style=text-decoration:underline>CC BY-NC-SA 4.0</a>许可协议，禁止商业使用，转载请注明出处！</p></div></div><div class=clear></div></div><div class=reward-qr-info><div>创作实属不易，你看着办 OwO</div><button id=rewardButton disable=enable onclick="var qr=document.getElementById('QR');qr.style.display==='none'?qr.style.display='block':qr.style.display='none'">
+<span>赏</span></button><div id=QR style=display:none><div id=wechat style=display:inline-block><img id=wechat_qr src=/img/wechat-pay.jpg alt="WeChat Pay"><p>微信打赏</p></div><div id=alipay style=display:inline-block><img id=alipay_qr src=/img/ali-pay.jpg alt=Alipay><p>支付宝打赏</p></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=https://yinanhong.site/post/hexo/ rel=next title="用Hexo框架搭建Github Page个人博客"><i class="fa fa-chevron-left"></i> 用Hexo框架搭建Github Page个人博客</a></div><div class="post-nav-prev post-nav-item"><a href=https://yinanhong.site/post/avltree/ rel=prev title=AVL树和Trie树>AVL树和Trie树
+<i class="fa fa-chevron-right"></i></a></div></div><div id=wcomments></div></footer></article></section></div></div><div class=sidebar-toggle><div class=sidebar-toggle-line-wrap><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id=sidebar class=sidebar><div class=sidebar-inner><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target=post-toc-wrap>文章目录</li><li class=sidebar-nav-overview data-target=site-overview>站点概览</li></ul><section class="site-overview sidebar-panel"><div class="site-author motion-element" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image src=/img/headpic.jpg alt=兔楠><p class=site-author-name itemprop=name>兔楠</p><p class="site-description motion-element" itemprop=description>凡是过往，皆为序章</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href=/post/><span class=site-state-item-count>18</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>7</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>26</span>
+<span class=site-state-item-name>标签</span></a></div></nav><div class="links-of-author motion-element"><span class=links-of-author-item><a href=/ target=_blank title=首页><i class="fa fa-fw fa-hand-peace-o"></i>
+首页</a></span>
+<span class=links-of-author-item><a href=/img/wxgzh.png target=_blank title=微信公众号><i class="fa fa-fw fa-weixin"></i>
+微信公众号</a></span>
+<span class=links-of-author-item><a href=https://github.com/Yinan-Hong/ target=_blank title=GitHub><i class="fa fa-fw fa-github"></i>
+GitHub</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-inline"><div class=links-of-blogroll-title><i class="fa fa-fw fa-globe"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://github.com/elkan1788/hugo-theme-next target=_blank title=主题来源><i class="fa fa-fw fa-github"></i>
+主题来源</a></li><li class=links-of-blogroll-item><a href=https://www.sztu.edu.cn/ target=_blank title=深圳技术大学><i class="fa fa-fw fa-graduation-cap"></i>
+深圳技术大学</a></li><li class=links-of-blogroll-item><a href=https://www.apple.com.cn/ target=_blank title=苹果中国><i class="fa fa-fw fa-apple"></i>
+苹果中国</a></li></ul></div><div class="tagcloud-of-blogroll motion-element tagcloud-of-blogroll-inline"><div class=tagcloud-of-blogroll-title><i class="fa fa-fw fa-tags"></i>
+标签云</div><ul class=tagcloud-of-blogroll-list><li class=tagcloud-of-blogroll-item><a href=/tags/markdown>Markdown</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/theme>Theme</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/%E4%BA%8C%E5%8F%89%E6%A0%91>二叉树</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84>数据结构</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/%E7%AE%97%E6%B3%95>算法</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/996>996th</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/avl%E6%A0%91>Avl树</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/b%E6%A0%91>B树</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/feelings>Feelings</a></li><li class=tagcloud-of-blogroll-item><a href=/tags/hexo>Hexo</a></li></ul></div><div class="links-of-blogroll motion-element inline"><script type=text/javascript src="//rf.revolvermaps.com/0/0/8.js?i=5oof3nzu4an&m=2&c=ff0000&cr1=ffffff&f=arial&l=33" async></script></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class=post-toc><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#一道题目>一道题目</a></li><li><a href=#kmp算法>KMP算法</a><ul><li><a href=#失配后下一round从第几位开始匹配>失配后，下一round从第几位开始匹配？</a></li></ul></li><li><a href=#next数组>next数组</a><ul><li><a href=#求next数组代码>求next数组代码</a></li></ul></li><li><a href=#kmp代码>KMP代码</a></li><li><a href=#上面求next的缺陷>上面求next的缺陷</a><ul><li><a href=#改进getnext>改进getNext</a></li></ul></li><li><a href=#二道算法题kmp算法>二道算法题——KMP算法</a></li><li><a href=#三道算法题特殊的语言>三道算法题——特殊的语言</a></li><li><a href=#写在后面>写在后面</a></li><li><a href=#参考资料和推荐阅读>参考资料和推荐阅读</a></li></ul></nav></div></div></section></div></aside></div></main><footer id=footer class=footer><div class=footer-inner><div class=copyright><span class=copyright-year>&copy; 2021 - 2021</span>
+<span class=with-love><i class="fa fa-heart"></i></span>
+<span class=copyright-author>兔兔的网站</span></div><div class=powered-info><span class=powered-by>Powered by - <a class=powered-link href=//gohugo.io target=_blank title=hugo>Hugo v0.82.1</a></span>
+<span class=separator-line>/</span>
+<span class=theme-info>Theme by - <a class=powered-link href=//github.com/elkan1788/hugo-theme-next target=_blank>NexT</a></span></div><div class=vistor-info><span class=cnzz_icon id=cnzz_stat_icon_1279899318><a href="//www.cnzz.com/stat/website.php?web_id=1279899318" target=_blank title=站长统计><img border=0 hspace=0 vspace=0 src=//icon.cnzz.com/img/pic1.gif></a></span>
+<script type=text/javascript>(function(){var a=document.createElement('script'),b;a.type='text/javascript',a.async=!0,a.charset='utf-8',a.src='https://s4.cnzz.com/z_stat.php?id=1279899318&show=pic1',b=document.getElementsByTagName('script')[0],b.parentNode.insertBefore(a,b)})()</script><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><span class=site-uv><i class="fa fa-user"></i>
+<span class=busuanzi-value id=busuanzi_value_site_uv></span></span><span class=separator-line>/</span>
+<span class=site-pv><i class="fa fa-eye"></i>
+<span class=busuanzi-value id=busuanzi_value_site_pv></span></span></div><div class=license-info><span class=storage-info>Storage by
+<a href=https://cn.aliyun.com/ style=font-weight:700 target=_blank>阿里云</a></span>
+<span class=separator-line>/</span>
+<span class=license-num><div><img width=18px style=display:inline-block;vertical-align:middle src=/img/beian.png>
+<span><a href=http://beian.miit.gov.cn>粤ICP备2021084529号</a></span></div></span></div></div></footer><div class=back-to-top><i class="fa fa-arrow-up"></i>
+<span id=scrollpercent><span>0</span>%</span></div></div><script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/2.1.4/jquery.min.js></script><script src=//cdn.bootcdn.net/ajax/libs/imageviewer/0.1.0/viewer.min.js></script><script type=text/javascript src=/js/search.js></script><script type=text/javascript src=/js/affix.js></script><script type=text/javascript src=/js/scrollspy.js></script><script type=text/javascript>function getCntViewHeight(){var b=$('#content').height(),a=$(window).height(),c=b>a?b-a:$(document).height()-a;return c}function getScrollbarWidth(){var a=$('<div />').addClass('scrollbar-measure').prependTo('body'),b=a[0],c=b.offsetWidth-b.clientWidth;return a.remove(),c}function registerBackTop(){var b=50,a=$('.back-to-top');$(window).on('scroll',function(){var d,e,f,c,g;a.toggleClass('back-to-top-on',window.pageYOffset>b),d=$(window).scrollTop(),e=getCntViewHeight(),f=d/e,c=Math.round(f*100),g=c>100?100:c,$('#scrollpercent>span').html(g)}),a.on('click',function(){$("html,body").animate({scrollTop:0,screenLeft:0},800)})}function initScrollSpy(){var a='.post-toc',d=$(a),b='.active-current';d.on('activate.bs.scrollspy',function(){var b=$(a+' .active').last();c(),b.addClass('active-current')}).on('clear.bs.scrollspy',c),$('body').scrollspy({target:a});function c(){$(a+' '+b).removeClass(b.substring(1))}}function initAffix(){var a=$('.header-inner').height(),b=parseInt($('.main').css('padding-bottom'),10),c=a+10;$('.sidebar-inner').affix({offset:{top:c,bottom:b}}),$(document).on('affixed.bs.affix',function(){updateTOCHeight(document.body.clientHeight-100)})}function initTOCDimension(){var a,b;$(window).on('resize',function(){a&&clearTimeout(a),a=setTimeout(function(){var a=document.body.clientHeight-100;updateTOCHeight(a)},0)}),updateTOCHeight(document.body.clientHeight-100),b=getScrollbarWidth(),$('.post-toc').css('width','calc(100% + '+b+'px)')}function updateTOCHeight(a){a=a||'auto',$('.post-toc').css('max-height',a)}$(function(){var b=$('.header-inner').height()+10,c,d,a,e;$('#sidebar').css({'margin-top':b}).show(),c=$('.header-inner').height(),d=$('.sidebar-inner').height(),a=c+d+50,e=$('.content-wrap').height(),e<a&&$('.content-wrap').css('height',a+50),$('.site-nav-toggle').on('click',function(){var a=$('.site-nav'),e=$('.toggle'),b='site-nav-on',f='toggle-close',c=a.hasClass(b),g=c?'slideUp':'slideDown',d=c?'removeClass':'addClass';a.stop()[g]('normal',function(){a[d](b),e[d](f)})}),registerBackTop(),initScrollSpy(),initAffix(),initTOCDimension(),$('.post-body').viewer(),$('.sidebar-nav-toc').click(function(){$(this).addClass('sidebar-nav-active'),$(this).next().removeClass('sidebar-nav-active'),$('.'+$(this).next().attr('data-target')).toggle(500),$('.'+$(this).attr('data-target')).toggle(500)}),$('.sidebar-nav-overview').click(function(){$(this).addClass('sidebar-nav-active'),$(this).prev().removeClass('sidebar-nav-active'),$('.'+$(this).prev().attr('data-target')).toggle(500),$('.'+$(this).attr('data-target')).toggle(500)})})</script><script src=//cdn.jsdelivr.net/npm/@waline/client></script><script type=text/javascript>new Waline({el:'#wcomments',visitor:!0,placeholder:' 发条评论试试~ ',requiredFields:['nick','mail'],serverURL:"https://waline-three.vercel.app/",lang:"zh-cn"})</script><script>(function(){var a=document.createElement('script'),c=window.location.protocol.split(':')[0],b;c==='https'?a.src='https://zz.bdstatic.com/linksubmit/push.js':a.src='http://push.zhanzhang.baidu.com/push.js',b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})()</script><script type=text/javascript src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6091f652e3a51633"></script></body></html>

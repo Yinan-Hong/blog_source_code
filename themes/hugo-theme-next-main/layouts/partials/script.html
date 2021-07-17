@@ -4,7 +4,7 @@
 {{ end }}
 <script type="text/javascript" src="/js/search.js"></script>
 <script type="text/javascript" src="/js/affix.js"></script>
-<script type="text/javascript" src="/js/scrollspy.js"></script> 
+<script type="text/javascript" src="/js/scrollspy.js"></script>
 <script type="text/javascript">
 
   function getCntViewHeight() {
@@ -116,7 +116,7 @@
 $(function() {
 
   var sidebarTop = $('.header-inner').height() + 10;
-  $('#sidebar').css({ 'margin-top': sidebarTop }).show(); 
+  $('#sidebar').css({ 'margin-top': sidebarTop }).show();
 
   // Seems no good for fixed the scroll bar issues
   var headerHeight = $('.header-inner').height();
@@ -150,23 +150,23 @@ $(function() {
   initTOCDimension();
 
 {{ if .IsPage }}
-  $('.post-body').viewer();  
+  $('.post-body').viewer();
 {{ end }}
 
   $('.sidebar-nav-toc').click(function(){
     $(this).addClass('sidebar-nav-active');
-    $(this).next().removeClass('sidebar-nav-active');      
+    $(this).next().removeClass('sidebar-nav-active');
     $('.'+$(this).next().attr('data-target')).toggle(500);
     $('.'+$(this).attr('data-target')).toggle(500);
   });
 
   $('.sidebar-nav-overview').click(function(){
     $(this).addClass('sidebar-nav-active');
-    $(this).prev().removeClass('sidebar-nav-active');      
+    $(this).prev().removeClass('sidebar-nav-active');
     $('.'+$(this).prev().attr('data-target')).toggle(500);
     $('.'+$(this).attr('data-target')).toggle(500);
   });
-});  
+});
 </script>
 {{ if .IsPage }}
 
@@ -185,7 +185,7 @@ $(function() {
 </script>
 {{end }}
 {{ if and (.Site.Params.Comment.Enable) (eq .Site.Params.Comment.Module "Waline") }}
-<script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+<script src="//cdn.jsdelivr.net/npm/@waline/client"></script>
 <script type="text/javascript">
   new Waline({
       el: '#wcomments',
@@ -213,7 +213,7 @@ function showTime(Counter) {
   var query = new AV.Query(Counter);
   var entries = [];
   var $visitors = $(".leancloud_visitors");
- 
+
   $visitors.each(function () {
     entries.push( $(this).attr("id").trim() );
   });
@@ -264,15 +264,15 @@ function addCount(Counter) {
         fetchWhenSave: true
       }).then((counter) => {
         var $element = $(document.getElementById(url));
-        $element.find('.leancloud-visitors-count').text(counter.get('time'));        
+        $element.find('.leancloud-visitors-count').text(counter.get('time'));
       }, (error) => {
         console.log('Update vistor failed: '+error);
       });
-    } else {      
+    } else {
       var acl = new AV.ACL();
       acl.setPublicReadAccess(true);
       acl.setPublicWriteAccess(true);
-     
+
       var newCounter = new Counter();
       newCounter.set("title", title);
       newCounter.set("url", url);
@@ -280,13 +280,13 @@ function addCount(Counter) {
 
       newCounter.setACL(acl);
       newCounter.save().then((counter) => {
-        
+
       var $element = $(document.getElementById(url));
       $element.find('.leancloud-visitors-count').text(newCounter.get('time'));
     }, (error) => {
       console.log("Save new vistor failed: "+error);
     });
-  }}); 
+  }});
 }
 
 $(function() {
@@ -295,7 +295,7 @@ $(function() {
     appId: "{{ .Site.Params.LeanCloud.AppId }}",
     appKey: "{{ .Site.Params.LeanCloud.AppKey }}",
     serverURL: "{{ .Site.Params.LeanCloud.ServerURL }}"
-  });  
+  });
 
   const Counter = AV.Object.extend("Counter");
 

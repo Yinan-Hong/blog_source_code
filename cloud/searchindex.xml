@@ -515,4 +515,7 @@ To enable emoji globally, set enableEmoji to true in your site&rsquo;s configura
 馃檲 🙈 馃檳 🙉 馃檴 🙊
 The Emoji cheat sheet is a useful reference for emoji shorthand codes.
 N.B. The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.
-1 2 3 .emoji { font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols; }  </content></entry></search>
+1 2 3 .emoji { font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols; }  </content></entry><entry><title>划水打卡日志</title><url>https://yinanhong.site/post/waterlog/</url><categories/><tags/><content type="html"> 周更不能保证质量，所以在这个页面记录一下一周的学习概况。有输入才有输出，也要高质量地输出。
+2021.7.17 欧洲杯真快乐。考完试玩了几天。
+修复了本站的一点小bug
+开始whosbug项目的前置学习。</content></entry></search>

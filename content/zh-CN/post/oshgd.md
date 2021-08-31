@@ -8,6 +8,7 @@ tags = [
     "操作系统"
 ]
 toc = true
+draft = true
 +++
 
 ## 开机

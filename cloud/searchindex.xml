@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>用Hexo框架搭建Github Page个人博客</title><url>https://yinanhong.site/post/hexo/</url><categories><category>小玩意</category></categories><tags><tag>Hexo</tag><tag>静态博客</tag></tags><content type="html"> 本文教大家快速从0搭建一个简单的博客，更深入的内容请自行了解。朋友们可以把成果留在评论区，有任何疑问欢迎留言。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>那小学生该干什么？</title><url>https://yinanhong.site/post/onehourpolicy/</url><categories><category>键政</category></categories><tags><tag>游戏</tag><tag>教育</tag></tags><content type="html"> 近日，国家新闻出版署下发《关于进一步严格管理 切实防止未成年人沉迷网络游戏的通知》。通知要求：
+所有网络游戏企业仅可在周五、周六、周日和法定节假日每日20时至21时向未成年人提供1小时服务，其他时间均不得以任何形式向未成年人提供网络游戏服务； 不得以任何形式向未实名注册和登录的用户提供游戏服务； 各级出版管理部门要加强对防止未成年人沉迷网络游戏有关措施落实情况的监督检查，对未严格落实的网络游戏企业，依法依规严肃处理； 积极引导家庭、学校等社会各方面共管共治，依法履行未成年人监护责任，为未成年人健康成长营造良好环境。 昨天在和同学聊到这个的时候，想到结合前段时间的“双减”政策（全面压减作业总量和时长，减轻学生过重作业负担），现在小学生不能上补习班了，又不能打游戏，又不能追星了，那小学生该干什么呢？
+想到我的小学生小婊弟打王者的时间更少了，我很开心。但是我认为一刀切地限制未成年人玩游戏，并没有解决什么问题。
+“双减”政策一定程度上要解决的是教育过度市场化导致的有失公平的问题，对娱乐圈的重锤是要解决青少年（乃至部分成年人=.=）错误价值导向的问题。那禁游戏是为了解决什么问题？
+显然，就算禁了游戏，小学生周末也不会去看书学习，不会去户外活动，不会去丰富自己的精神世界。那些对禁游戏拍手叫好的家长们，是否想好了要怎样填充小孩子的业余时间？如果各位996社畜对孩子的空闲时间没有规划的话，小孩子原本玩游戏的时间去看了电视，看了直播，刷了抖音，这只不过是从干一件没多大意义的事变成干另一件更没意义的事罢了。
+其实游戏本就没啥大问题，大把成年人也沉迷打牌沉迷麻将，但没人去怪扑克牌麻将啊。把一切错误都归咎到游戏上，只是家长们不愿承认自己没有做好家庭教育，而找来的说辞。沉迷游戏的问题，不应该怪游戏，应该怪教育。
+另外，禁游戏真的能防止未成年人玩游戏吗？我小时候就大把小孩子拿成年人的身份证登记游戏信息了。想起我另一个小婊弟是用他妈的身份证登记的王者=.= &hellip;知乎上也有回答，韩国几年前出台政策，禁止在夜间向未成年提供游戏服务，而效果并不好。这里就不展开讨论了。
+总之，禁游戏并没有结果什么实质上的问题。原本家庭教育好的小学生本就有丰富而有意义的课余活动，而对真正沉迷游戏，深受其害的这类小学生，这样的政策并解决不了什么问题。</content></entry><entry><title>用Hexo框架搭建Github Page个人博客</title><url>https://yinanhong.site/post/hexo/</url><categories><category>小玩意</category></categories><tags><tag>Hexo</tag><tag>静态博客</tag></tags><content type="html"> 本文教大家快速从0搭建一个简单的博客，更深入的内容请自行了解。朋友们可以把成果留在评论区，有任何疑问欢迎留言。
 前言 拥有一个个人博客还是一件比较酷的事情，而且非常适合新手入门。不只是做前端，在做个人博客的过程中，会接触到很多技术，我自己就是从搭了这个网页开始，慢慢想搞各种各样乱七八糟的东西的。
 如果过程中有不熟悉的技术，可以先跟着流程把网站搭起来，以后再慢慢研究不懂的地方。
 静态网页（可跳过） 百度：
@@ -516,6 +523,7 @@ To enable emoji globally, set enableEmoji to true in your site&rsquo;s configura
 The Emoji cheat sheet is a useful reference for emoji shorthand codes.
 N.B. The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.
 1 2 3 .emoji { font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols; }  </content></entry><entry><title>划水打卡日志</title><url>https://yinanhong.site/post/waterlog/</url><categories/><tags/><content type="html"> 周更不能保证质量，所以在这个页面记录一下一周的学习概况。有输入才有输出，也要高质量地输出。
+2021.7.26 哈工大操作系统/linux 0.01内和分析学习概要
 2021.7.17 欧洲杯真快乐。考完试玩了几天。
 修复了本站的一点小bug
 开始whosbug项目的前置学习。</content></entry></search>
